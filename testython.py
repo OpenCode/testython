@@ -13,7 +13,7 @@
 
 from datetime import datetime
 from sys import getsizeof
-from os import path, getcwd
+from os import path, getcwd, sep
 
 
 # ------------------
@@ -110,15 +110,15 @@ class log():
 		if not path:
 			return False
 		# ----- Add final slash
-		if path[-1:] != '/':
-			path = '%s/' % path
+		if path[-1:] != sep:
+			path = '%s%s' % (path, sep)
 		self.path = path
 		return True
 
 	def get_path(self):
 		path = self.path or getcwd()
-		if path[-1:] != '/':
-			path = '%s/' % path
+		if path[-1:] != sep:
+			path = '%s%s' % (path, sep)
 		return path
 		
 	def set_name(self, name):
@@ -134,7 +134,7 @@ class log():
 		# ----- Exit if path and name are not set
 		if not self.get_path() and not self.get_name():
 			return False
-		file_name = '%s/%s' % (path.dirname(self.get_path()), self.get_name())
+		file_name = '%s%s%s' % (path.dirname(self.get_path()), sep, self.get_name())
 		log_file=file(file_name, 'a')
 		complete_content = "[%s] %s\n" % (datetime.today(), content)
 		log_file.write(complete_content)
