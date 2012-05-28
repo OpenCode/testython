@@ -16,13 +16,22 @@ import testython as testython
 
 if __name__ == '__main__':
 
-	testython.print_log_line('Start sample test!')
+	clog = testython.log()
+	# ----- If you want you can set log path, too!
+	#clog.set_path('/home/USER/FOLDER')
+	clog.set_name('try_log')
+
+	clog.print_line('Welcome to Testython! This is a simple log line!')
+	clog.print_line('Use it for your debug on python code!')
+	clog.print_line('For the script, use the file log line. It\'s better!!!')
+
+	clog.append('Start sample test!')
 
 	# ---------
 	# TIME TEST
 	# ---------
 
-	testython.print_log_line('Start TIME test!')
+	clog.append('Start TIME test!')
 
 	tt = testython.test_time()
 	tt.set_start_time()
@@ -38,7 +47,7 @@ if __name__ == '__main__':
 	# MEM TEST
 	# --------
 
-	testython.print_log_line('Start MEMORY test!')
+	clog.append('Start MEMORY test!')
 
 	tm = testython.test_memory()
 	print tm.get_object_size(inc_var, tm.DIM_BIT), 'bit'
@@ -51,4 +60,4 @@ if __name__ == '__main__':
 	print 'Biggest variable:', tm.biggest_var([a, b, c,])
 	print 'Biggest variable:', tm.biggest_var([100, 400, 350,])
 
-	testython.print_log_line('Stop sample test!')
+	clog.append('Stop sample test!')

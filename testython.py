@@ -10,15 +10,10 @@
 #
 #####################################################################################
 
+
 from datetime import datetime
 from sys import getsizeof
-
-# ------------------
-# GENERIC UTILITY
-# ------------------
-
-def print_log_line(message):
-	print  '[%s] %s' % (datetime.today(), message)
+from os import path, getcwd
 
 
 # ------------------
@@ -57,7 +52,7 @@ class test_time():
 
 
 # ------------------
-# TEST TIME
+# TEST MEMORY
 # ------------------
 
 class test_memory():
@@ -101,3 +96,50 @@ class test_memory():
 			if variables_list[val] == actual_biggest_var:
 				return (val, variables_list[val])
 		return (False, actual_biggest_var)
+
+# ------------------
+# MANAGE LOG
+# ------------------
+
+class log():
+
+	path = ''
+	name = ''
+
+	def set_path(self, path):
+		if not path:
+			return False
+		# ----- Add final slash
+		if path[-1:] != '/':
+			path = '%s/' % path
+		self.path = path
+		return True
+
+	def get_path(self):
+		path = self.path or getcwd()
+		if path[-1:] != '/':
+			path = '%s/' % path
+		return path
+		
+	def set_name(self, name):
+		if not name:
+			return False
+		self.name = name
+		return True
+
+	def get_name(self):
+		return self.name
+
+	def append(self, content):
+		# ----- Exit if path and name are not set
+		if not self.get_path() and not self.get_name():
+			return False
+		file_name = '%s/%s' % (path.dirname(self.get_path()), self.get_name())
+		log_file=file(file_name, 'a')
+		complete_content = "[%s] %s\n" % (datetime.today(), content)
+		log_file.write(complete_content)
+		log_file.close()
+		return True
+
+	def print_line(self, content):
+		print '[%s] %s' % (datetime.today(), content)
